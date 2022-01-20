@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+const database = require('./lib/database.js');
 
 app.get('*', (request, response) => {
         response.send('Response to a get request');
