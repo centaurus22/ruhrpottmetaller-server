@@ -2,7 +2,7 @@
 
 const express = require('express');
 const webserver = express();
-//const database = require('./lib/database.js');
+const database = require('./lib/databaseConnection.js');
 
 webserver.get('*', (request, response) => {
         response.send('Response to a get request');

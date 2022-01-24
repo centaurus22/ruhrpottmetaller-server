@@ -5,5 +5,5 @@ const connection = mysql.createConnection({
     database: 'database',
     password: '********'
 });
-connection.connect();
+
 module.exports = connection;
