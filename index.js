@@ -2,10 +2,12 @@
 
 const express = require('express');
 const webserver = express();
-const database = require('./lib/databaseConnection.js');
+
+const controller = require('./lib/controller');
+const mainController = new controller;
 
 webserver.get('*', (request, response) => {
-        response.send('Response to a get request');
+        response.json(mainController.getJsonResponse());
 });
 
 webserver.all('*', (request, response) => {
