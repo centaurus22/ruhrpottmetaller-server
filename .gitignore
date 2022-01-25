@@ -2,3 +2,4 @@
 /package-lock.json
 /.idea
 /lib/databaseConnection.js
+/.nyc_output/
