@@ -1,18 +1,13 @@
 'use strict';
 
 const express = require('express');
-const webserver = express();
+const app = express();
 
-const controller = require('./lib/controller');
-const mainController = new controller;
+const event = require('./routes/event');
 
-webserver.get('*', (request, response) => {
-        response.json(mainController.getJsonResponse());
-});
+app.use(express.static('static'));
 
-webserver.all('*', (request, response) => {
-        response.status(501).send({msg: 'Not Implemented'});
-});
+app.use('/api/v1/event', event);
 
 const port = 3000;
-webserver.listen(port, () => console.log('Server running on port ' + port));
+app.listen(port, () => console.log('Server running on port ' + port));

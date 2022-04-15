@@ -1,5 +1,5 @@
 const assert = require('assert');
-const database = require('../../lib/databaseConnection.js');
+const database = require('../lib/databaseConnection.js');
 const Connection = require("mysql/lib/Connection");
 
 suite('databaseConnection.js', function() {

@@ -1,7 +1,7 @@
 const assert = require("assert");
-const event = require("../../../lib/datasets/event.js");
+const event = require("../../lib/datasets/event.js");
 
-suite("event.js", function() {
+suite("dataset/event.js", function() {
     test("should return a class", function() {
         let event_1 = new event();
         assert.equal(typeof event_1, "object");

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const variable = require("../../lib/variable.js");
+const variable = require("../lib/variable.js");
 
 suite("variable.js", function() {
     test("setValue should accept a value", function() {

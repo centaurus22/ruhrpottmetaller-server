@@ -1,5 +1,7 @@
 /node_modules/
 /package-lock.json
-/.idea
 /lib/databaseConnection.js
+
 /.nyc_output/
+/.idea
+*.swp
