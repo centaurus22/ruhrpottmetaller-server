@@ -3,8 +3,16 @@ const event = require('../../lib/datasets/eventDataset.js');
 const abstractDataset = require('../../lib/datasets/abstractDataset');
 
 suite('dataset/event.js', function() {
-      assert.equal(Dataset.getProperties() instanceof Array, true);
-      assert.equal(Dataset.getProperties().length, 0);
+   test('should return a class', function() {
+      let event_1 = new event();
+      assert.equal(typeof event_1, 'object');
+  });
+
+  test(
+    'getUrl() should return an object which is passed by the constructor',
+    function () {
+      let event_2 = new event(new Date());
+      assert.equal(event_2.getUrl() instanceof Date, true)
   });
 
   test(
@@ -20,7 +28,7 @@ suite('dataset/event.js', function() {
   });
 
   test(
-    'getProperties() of a Dataset with properties should return Array with property names without _',
+    'getProperties() of a Dataset with properties should return an Array with property names without _',
     function() {
       const dataset = class dataset extends abstractDataset{
         _url = null;
