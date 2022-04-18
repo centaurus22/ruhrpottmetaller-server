@@ -47,10 +47,10 @@ suite('model.js', function() {
   test(
     '_getDatasetName() should throw an error if the object name does not end with "Dataset"',
     function() {
-      const eventData = class eventData {};
-      const Model = new model(new eventData());
+      const testDataset = class testDataset {};
+      const Model = new model(testDataset);
       assert.throws(
-        () => TestData._getDatasetName(),
+        () => Model._getDatasetName(),
         Error,
         'The Dataset name must end with "Dataset".'
       );
