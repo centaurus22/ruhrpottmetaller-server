@@ -19,7 +19,6 @@
     "nodemon": "^2.0"
   },
   "mocha": {
-    "recursive": "true",
-    "ui": "tdd"
+    "recursive": "true"
   }
 }
