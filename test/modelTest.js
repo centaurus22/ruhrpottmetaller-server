@@ -8,7 +8,7 @@ suite('model.js', function() {
       const dataset = class dataset {
         _url = null;
       };
-      const Model = new model(new dataset);
+      const Model = new model(null, new dataset);
       assert.equal(Model._getProperties() instanceof Array, true);
       assert.equal(Model._getProperties().length, 1);
       assert.equal(Model._getProperties()[0], 'url');
@@ -21,7 +21,7 @@ suite('model.js', function() {
         _url = null;
         _name = null;
       };
-      const Model = new model(new dataset);
+      const Model = new model(null, new dataset);
       assert.equal(Model._getProperties() instanceof Array, true);
       assert.equal(Model._getProperties().length, 2);
       assert.equal(Model._getProperties()[0], 'url');
@@ -32,7 +32,7 @@ suite('model.js', function() {
     const eventDataset = class eventDataset {
       _url = null;
     };
-    const Model = new model(new eventDataset);
+    const Model = new model(null, new eventDataset);
     assert.equal(Model._getDatasetName(), 'event');
   });
 
@@ -40,7 +40,7 @@ suite('model.js', function() {
     '_getDatasetName() should return the name of the testDataset',
     function() {
       const testDataset = class testDataset {};
-      const Model = new model( new testDataset());
+      const Model = new model(null, new testDataset());
       assert.equal(Model._getDatasetName(), 'test');
   });
 
@@ -48,7 +48,7 @@ suite('model.js', function() {
     '_getDatasetName() should throw an error if the object name does not end with "Dataset"',
     function() {
       const testDataset = class testDataset {};
-      const Model = new model(testDataset);
+      const Model = new model(null, testDataset);
       assert.throws(
         () => Model._getDatasetName(),
         Error,
@@ -62,7 +62,7 @@ suite('model.js', function() {
       const testDataset = class testDataset {
         _ = null;
       };
-      const Model = new model(new testDataset());
+      const Model = new model(null, new testDataset());
       assert.throws(
         () => Model._getProperties(),
         Error,
