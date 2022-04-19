@@ -67,4 +67,16 @@ describe('model.js', function() {
         'Property names must contain at least two chars including the underscore."'
       );
     });
+
+  it(
+    'should throw an error if no dataset property is given',
+    function() {
+      const testDataset = class testDataset {};
+      const Model = new model(null, new testDataset());
+      assert.throws(
+        () => Model._getProperties(),
+        Error,
+        'The dataset must contain at least one variable.'
+      );
+    });
 });
