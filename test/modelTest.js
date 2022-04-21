@@ -1,7 +1,25 @@
 const model = require('../lib/model.js');
+let testDatabaseConnection = require('./testLib/testDatabaseConnection');
 const assert = require('assert');
 
 describe('model.js', function() {
+  before(function () {
+    testDatabaseConnection.connect();
+  });
+
+  afterEach(function () {
+    const sql = 'TRUNCATE TABLE event';
+    testDatabaseConnection.query(sql, function (error) {
+      if (error) {
+        throw error;
+      }
+    });
+  });
+
+  after(function () {
+    testDatabaseConnection.end();
+  });
+
   describe('_getProperties()', function () {
     it(
       'should return an Array with the property name if a dataset with one property is provided',
@@ -14,7 +32,7 @@ describe('model.js', function() {
         assert.equal(Model._getProperties().length, 1);
         assert.equal(Model._getProperties()[0], '_url');
 
-      });
+    });
 
     it('should return an Array with property names', function() {
       const dataset = class dataset {
@@ -56,6 +74,6 @@ describe('model.js', function() {
           Error,
           'The Dataset name must end with "Dataset".'
         );
-      });
+    });
   });
 });
