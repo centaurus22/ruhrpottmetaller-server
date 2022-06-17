@@ -9,7 +9,7 @@ describe('dataset/eventDataset.js', function() {
 
   describe ('getUrl()', function () {
     it('should return an object which is passed by the constructor', function () {
-      let Event = new event('https://www.google.de')
+      let Event = new event('https://www.google.de');
       assert.equal(Event.getUrl(), 'https://www.google.de');
     });
   });
@@ -21,7 +21,6 @@ describe('dataset/eventDataset.js', function() {
         let Event = new event();
         assert.equal(Event.getProperties() instanceof Array, true);
         assert.equal(Event.getProperties()[0], '_url');
-
     });
   });
 
