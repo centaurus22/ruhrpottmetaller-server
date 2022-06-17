@@ -1,6 +1,7 @@
-const model = require('../lib/model.js');
+const model = require('../lib/model');
+const event = require('../lib/datasets/eventDataset');
 let testDatabaseConnection = require('./testLib/testDatabaseConnection');
-const assert = require('assert');
+const assert = require('chai').assert;
 
 describe('model.js', function() {
   before(function () {
@@ -20,4 +21,12 @@ describe('model.js', function() {
     testDatabaseConnection.end();
   });
 
+  describe('getDataset()', function() {
+    it('should return the event object', function() {
+      const Event = new event;
+      const Model = new model(null, Event);
+      assert.isObject(Model.getDataset());
+      assert.instanceOf(Model.getDataset(), event);
+    });
+  });
 });
