@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const event = require('../../lib/datasets/eventDataset.js');
 
 describe('dataset/eventDataset.js', function() {
@@ -36,20 +36,20 @@ describe('dataset/eventDataset.js', function() {
       assert.equal(Event.getId(), 2);
     });
   });
-  describe('getProperties()', function () {
+  describe('_getProperties()', function () {
     it(
       'should return an Array with the property name "_id"',
       function () {
         let Event = new event();
-        assert.equal(Event.getProperties()[0], '_id');
+        assert.equal(Event._getProperties()[0], '_id');
     });
 
     it(
       'should return an Array with the property name "_url"',
       function () {
         let Event = new event();
-        assert.equal(Event.getProperties() instanceof Array, true);
-        assert.equal(Event.getProperties()[1], '_url');
+        assert.equal(Event._getProperties() instanceof Array, true);
+        assert.equal(Event._getProperties()[1], '_url');
     });
   });
 
@@ -57,6 +57,17 @@ describe('dataset/eventDataset.js', function() {
     it('should return the name of the dataset', function () {
       let Event = new event();
       assert.equal(Event.getDatasetName(), 'event');
+    });
+  });
+
+  describe('getDatasetProperties()', function () {
+    it('should return an Array containing setters and getters', function () {
+      let Event = new event();
+      assert.instanceOf(Event.getProperties(), Array);
+      assert.instanceOf(Event.getProperties()[0], Array);
+      assert.equal(Event.getProperties()[0][0], 'id');
+      assert.equal(Event.getProperties()[0][1], 'getId');
+      assert.equal(Event.getProperties()[0][2], 'setId');
     });
   });
 });
