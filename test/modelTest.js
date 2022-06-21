@@ -4,7 +4,11 @@ const event = require('../lib/datasets/eventDataset');
 let testDatabaseConnection = require('./testLib/testDatabaseConnection');
 const assert = require('chai').assert;
 
-let Event = new event(new variable('id'), new variable('url'));
+let Event = new event(
+  new variable('id'),
+  new variable('name'),
+  new variable('url')
+);
 const Model = new model(testDatabaseConnection, Event);
 
 describe('model.js', function() {

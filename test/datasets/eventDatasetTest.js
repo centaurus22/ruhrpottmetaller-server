@@ -9,14 +9,14 @@ describe('dataset/eventDataset.js', function() {
 
   describe ('getUrl()', function () {
     it('should return an object which is passed by the constructor', function () {
-      let Event = new event(null, 'https://www.google.de');
+      let Event = new event(null, null, 'https://www.google.de');
       assert.equal(Event.getUrl(), 'https://www.google.de');
     });
   });
 
   describe ('setUrl()', function () {
     it('should return an object which is passed by the setUrl() method', function () {
-      let Event = new event(null, null);
+      let Event = new event(null, null, null);
       Event.setUrl('https://www.beerfest.de');
       assert.equal(Event.getUrl(), 'https://www.beerfest.de');
     });
@@ -24,18 +24,26 @@ describe('dataset/eventDataset.js', function() {
 
   describe ('getId()', function () {
     it('should return an object which is passed by the constructor', function () {
-      let Event = new event(1, null);
+      let Event = new event(1, null, null);
       assert.equal(Event.getId(), 1);
     });
   });
 
   describe ('setId()', function () {
     it('should return an object which is passed by the setId() method', function () {
-      let Event = new event(null, null);
+      let Event = new event(null, null, null);
       Event.setId(2);
       assert.equal(Event.getId(), 2);
     });
   });
+
+  describe ('getName()', function () {
+    it('should return an object which is passed by the constructor', function () {
+      let Event = new event(null, 'Beerfest', null);
+      assert.equal(Event.getName(), 'Beerfest');
+    });
+  });
+
   describe('_getProperties()', function () {
     it(
       'should return an Array with the property name "_id"',
@@ -49,7 +57,7 @@ describe('dataset/eventDataset.js', function() {
       function () {
         let Event = new event();
         assert.equal(Event._getProperties() instanceof Array, true);
-        assert.equal(Event._getProperties()[1], '_url');
+        assert.equal(Event._getProperties()[2], '_url');
     });
   });
 
