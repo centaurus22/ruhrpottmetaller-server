@@ -76,6 +76,34 @@ describe('model.js', function() {
         datasets[1].getUrl().getValue(),
         'https://www.ruhrpottmetaller.de'
       );
+      assert.equal(
+        datasets[1].getId().getValue(),
+        2
+      );
+    });
+
+    it('should return sort datasets by date', async function() {
+      const sql1 = 'INSERT INTO event SET date_start = "2032-07-22", url = "https://www.beerfest.de"';
+      const sql2 = 'INSERT INTO event SET date_start = "2032-06-22", url = "https://www.ruhrpottmetaller.de"';
+      await testDatabaseConnection.query(sql1, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      await testDatabaseConnection.query(sql2, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      const datasets = await Model.getDatasets();
+      assert.equal(
+        datasets[1].getUrl().getValue(),
+        'https://www.beerfest.de'
+      );
+      assert.equal(
+        datasets[0].getUrl().getValue(),
+        'https://www.ruhrpottmetaller.de'
+      );
     });
   });
 });
