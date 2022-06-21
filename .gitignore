@@ -1,6 +1,7 @@
 /node_modules/
 /package-lock.json
 /lib/databaseConnection.js
+/test/testLib/testDatabaseConnection.js
 
 /.nyc_output/
 /.idea

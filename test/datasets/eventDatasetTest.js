@@ -1,17 +1,73 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const event = require('../../lib/datasets/eventDataset.js');
 
-suite('dataset/event.js', function() {
-  test('should return an object', function() {
-    let event_1 = new event();
-    assert.equal(typeof event_1, 'object');
+describe('dataset/eventDataset.js', function() {
+  it('should define an object', function() {
+    let Event = new event();
+    assert.equal(typeof Event, 'object');
   });
 
-  test(
-    'getUrl() should return an object which is passed by the constructor',
-    function () {
-      let event_2 = new event(new Date());
-      assert.equal(event_2.getUrl() instanceof Date, true);
+  describe ('getUrl()', function () {
+    it('should return an object which is passed by the constructor', function () {
+      let Event = new event(null, 'https://www.google.de');
+      assert.equal(Event.getUrl(), 'https://www.google.de');
+    });
   });
 
+  describe ('setUrl()', function () {
+    it('should return an object which is passed by the setUrl() method', function () {
+      let Event = new event(null, null);
+      Event.setUrl('https://www.beerfest.de');
+      assert.equal(Event.getUrl(), 'https://www.beerfest.de');
+    });
+  });
+
+  describe ('getId()', function () {
+    it('should return an object which is passed by the constructor', function () {
+      let Event = new event(1, null);
+      assert.equal(Event.getId(), 1);
+    });
+  });
+
+  describe ('setId()', function () {
+    it('should return an object which is passed by the setId() method', function () {
+      let Event = new event(null, null);
+      Event.setId(2);
+      assert.equal(Event.getId(), 2);
+    });
+  });
+  describe('_getProperties()', function () {
+    it(
+      'should return an Array with the property name "_id"',
+      function () {
+        let Event = new event();
+        assert.equal(Event._getProperties()[0], '_id');
+    });
+
+    it(
+      'should return an Array with the property name "_url"',
+      function () {
+        let Event = new event();
+        assert.equal(Event._getProperties() instanceof Array, true);
+        assert.equal(Event._getProperties()[1], '_url');
+    });
+  });
+
+  describe('getDatasetName()', function () {
+    it('should return the name of the dataset', function () {
+      let Event = new event();
+      assert.equal(Event.getDatasetName(), 'event');
+    });
+  });
+
+  describe('getDatasetProperties()', function () {
+    it('should return an Array containing setters and getters', function () {
+      let Event = new event();
+      assert.instanceOf(Event.getProperties(), Array);
+      assert.instanceOf(Event.getProperties()[0], Array);
+      assert.equal(Event.getProperties()[0][0], 'id');
+      assert.equal(Event.getProperties()[0][1], 'getId');
+      assert.equal(Event.getProperties()[0][2], 'setId');
+    });
+  });
 });

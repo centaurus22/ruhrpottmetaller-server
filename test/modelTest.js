@@ -1,72 +1,130 @@
-const model = require('../lib/model.js');
-const assert = require('assert');
+const model = require('../lib/model');
+const variable = require('../lib/variable');
+const event = require('../lib/datasets/eventDataset');
+let testDatabaseConnection = require('./testLib/testDatabaseConnection');
+const assert = require('chai').assert;
 
-suite('model.js', function() {
-  test(
-    '_getProperties() of a Dataset with one property should return an Array with the property name without _',
-    function() {
-      const dataset = class dataset {
-        _url = null;
-      };
-      const Model = new model(new dataset);
-      assert.equal(Model._getProperties() instanceof Array, true);
-      assert.equal(Model._getProperties().length, 1);
-      assert.equal(Model._getProperties()[0], 'url');
+let Event = new event(new variable('id'), new variable('url'));
+const Model = new model(testDatabaseConnection, Event);
+
+describe('model.js', function() {
+  before(function () {
+    testDatabaseConnection.connect();
   });
 
-  test(
-    '_getProperties() of a Dataset with properties should return an Array with property names without _',
-    function() {
-      const dataset = class dataset {
-        _url = null;
-        _name = null;
-      };
-      const Model = new model(new dataset);
-      assert.equal(Model._getProperties() instanceof Array, true);
-      assert.equal(Model._getProperties().length, 2);
-      assert.equal(Model._getProperties()[0], 'url');
-      assert.equal(Model._getProperties()[1], 'name');
+  afterEach(function () {
+    const sql = 'TRUNCATE TABLE event';
+    testDatabaseConnection.query(sql, function (error) {
+      if (error) {
+        throw error;
+      }
+    });
   });
 
-  test('_getDatasetName() should return the name of the dataset', function() {
-    const eventDataset = class eventDataset {
-      _url = null;
-    };
-    const Model = new model(new eventDataset);
-    assert.equal(Model._getDatasetName(), 'event');
+  after(function () {
+    testDatabaseConnection.end();
   });
 
-  test(
-    '_getDatasetName() should return the name of the testDataset',
-    function() {
-      const testDataset = class testDataset {};
-      const Model = new model( new testDataset());
-      assert.equal(Model._getDatasetName(), 'test');
-  });
+  describe('getDatasets()', function() {
+    it('should return an Array', async function() {
+      assert.instanceOf(await Model.getDatasets(), Array);
+    });
 
-  test(
-    '_getDatasetName() should throw an error if the object name does not end with "Dataset"',
-    function() {
-      const testDataset = class testDataset {};
-      const Model = new model(testDataset);
-      assert.throws(
-        () => Model._getDatasetName(),
-        Error,
-        'The Dataset name must end with "Dataset".'
+    it('should return an Array with one Dataset if event table contains one item', async function() {
+      const sql = 'INSERT INTO event SET date_start = CURRENT_DATE() + 1, url = "https://www.ruhrpottmetaller.de"';
+      await testDatabaseConnection.query(sql, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      const datasets = await Model.getDatasets();
+      assert.instanceOf(datasets, Array);
+      assert.equal(datasets.length, 1);
+      assert.isObject(datasets[0]);
+      assert.instanceOf(datasets[0], event);
+      assert.isObject(datasets[0].getUrl());
+      assert.instanceOf(datasets[0].getUrl(), variable);
+      assert.instanceOf(datasets[0].getId(), variable);
+      assert.equal(
+        datasets[0].getUrl().getValue(),
+        'https://www.ruhrpottmetaller.de'
       );
-  });
+      assert.equal(datasets[0].getId().getValue(), 1);
+    });
 
-  test(
-    '_getDatasetName() should throw an error if a dataset property name less than 2 chars long',
-    function() {
-      const testDataset = class testDataset {
-        _ = null;
-      };
-      const Model = new model(new testDataset());
-      assert.throws(
-        () => Model._getProperties(),
-        Error,
-        'Property names must contain at least two chars including the underscore."'
+    it('should return an Array with two Datasets if event table contains two items', async function() {
+      const sql1 = 'INSERT INTO event SET date_start = CURRENT_DATE() + 1, url = "https://www.beerfest.de"';
+      const sql2 = 'INSERT INTO event SET date_start = CURRENT_DATE() + 1, url = "https://www.ruhrpottmetaller.de"';
+      await testDatabaseConnection.query(sql1, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      await testDatabaseConnection.query(sql2, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      const datasets = await Model.getDatasets();
+      assert.instanceOf(datasets, Array);
+      assert.equal(datasets.length, 2);
+      assert.equal(
+        datasets[0].getUrl().getValue(),
+        'https://www.beerfest.de'
       );
+      assert.equal(
+        datasets[1].getUrl().getValue(),
+        'https://www.ruhrpottmetaller.de'
+      );
+      assert.equal(
+        datasets[1].getId().getValue(),
+        2
+      );
+    });
+
+    it('should sort datasets by date', async function() {
+      const sql1 = 'INSERT INTO event SET date_start = "2032-07-22", url = "https://www.beerfest.de"';
+      const sql2 = 'INSERT INTO event SET date_start = "2032-06-22", url = "https://www.ruhrpottmetaller.de"';
+      await testDatabaseConnection.query(sql1, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      await testDatabaseConnection.query(sql2, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      const datasets = await Model.getDatasets();
+      assert.equal(
+        datasets[1].getUrl().getValue(),
+        'https://www.beerfest.de'
+      );
+      assert.equal(
+        datasets[0].getUrl().getValue(),
+        'https://www.ruhrpottmetaller.de'
+      );
+    });
+
+    it('should ignore datasets in the past', async function() {
+      const sql1 = 'INSERT INTO event SET date_start = "2012-07-22", url = "https://www.beerfest.de"';
+      const sql2 = 'INSERT INTO event SET date_start = "2032-06-22", url = "https://www.ruhrpottmetaller.de"';
+      await testDatabaseConnection.query(sql1, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      await testDatabaseConnection.query(sql2, function (error) {
+        if (error) {
+          throw error;
+        }
+      });
+      const datasets = await Model.getDatasets();
+      assert.equal(
+        datasets[0].getUrl().getValue(),
+        'https://www.ruhrpottmetaller.de'
+      );
+      assert.equal(datasets.length, 1);
+    });
   });
 });
