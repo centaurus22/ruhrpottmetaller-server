@@ -7,6 +7,7 @@ const assert = require('chai').assert;
 let Event = new event(
   new variable('id'),
   new variable('name'),
+  new variable('date_start'),
   new variable('url')
 );
 const Model = new model(testDatabaseConnection, Event);
@@ -35,7 +36,10 @@ describe('model.js', function() {
     });
 
     it('should return an Array with one Dataset if event table contains one item', async function() {
-      const sql = 'INSERT INTO event SET date_start = CURRENT_DATE() + 1, url = "https://www.ruhrpottmetaller.de"';
+      const sql = 'INSERT INTO event SET '
+        + 'date_start = "2035-03-03", '
+        + 'name = "Darkness-Fest", '
+        + 'url = "https://www.ruhrpottmetaller.de"';
       await testDatabaseConnection.query(sql, function (error) {
         if (error) {
           throw error;
@@ -54,6 +58,8 @@ describe('model.js', function() {
         'https://www.ruhrpottmetaller.de'
       );
       assert.equal(datasets[0].getId().getValue(), 1);
+      assert.equal(datasets[0].getName().getValue(), "Darkness-Fest");
+      assert.equal(datasets[0].getDateStart().getValue(), "2035-03-03");
     });
 
     it('should return an Array with two Datasets if event table contains two items', async function() {
