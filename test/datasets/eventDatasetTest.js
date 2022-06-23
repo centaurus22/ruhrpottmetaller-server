@@ -10,7 +10,7 @@ describe('dataset/eventDataset.js', function() {
 
   describe ('getUrl()', function () {
     it('should return an object which is passed by the constructor', function () {
-      let Event = new event(null, null, null, 'https://www.google.de');
+      let Event = new event(null, null, null, null, 'https://www.google.de');
       assert.equal(Event.getUrl(), 'https://www.google.de');
     });
   });
@@ -52,6 +52,13 @@ describe('dataset/eventDataset.js', function() {
     });
   });
 
+  describe ('getNumberOfDates()', function () {
+    it('should return an object which is passed by the constructor', function () {
+      let Event = new event(null, null, null, 10, null);
+      assert.equal(Event.getNumberOfDays(), 10);
+    });
+  });
+
   describe('_getProperties()', function () {
     it(
       'should return an Array with the property name "_id"',
@@ -65,7 +72,7 @@ describe('dataset/eventDataset.js', function() {
       function () {
         let Event = new event();
         assert.equal(Event._getProperties() instanceof Array, true);
-        assert.equal(Event._getProperties()[3], '_url');
+        assert.equal(Event._getProperties()[4], '_url');
     });
   });
 
@@ -82,6 +89,7 @@ describe('dataset/eventDataset.js', function() {
         new variable('id'),
         new variable('name'),
         new variable('date_start'),
+        new variable('number_of_days'),
         new variable('url')
       );
       assert.instanceOf(Event.getProperties()[0], Array);

@@ -8,6 +8,7 @@ let Event = new event(
   new variable('id'),
   new variable('name'),
   new variable('date_start'),
+  new variable('number_of_days'),
   new variable('url')
 );
 const Model = new model(testDatabaseConnection, Event);
@@ -58,8 +59,8 @@ describe('model.js', function() {
         'https://www.ruhrpottmetaller.de'
       );
       assert.equal(datasets[0].getId().getValue(), 1);
-      assert.equal(datasets[0].getName().getValue(), "Darkness-Fest");
-      assert.equal(datasets[0].getDateStart().getValue(), "2035-03-03");
+      assert.equal(datasets[0].getName().getValue(), 'Darkness-Fest');
+      assert.equal(datasets[0].getDateStart().getValue(), '2035-03-03');
     });
 
     it('should return an Array with two Datasets if event table contains two items', async function() {
