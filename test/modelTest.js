@@ -17,21 +17,17 @@ let Event = new event(
 const Model = new model(testDatabaseConnection, Event);
 
 describe('model.js', function() {
-  before(function () {
-    testDatabaseConnection.connect();
-  });
-
-  afterEach(function () {
+  afterEach(async function () {
     const sql = 'TRUNCATE TABLE event';
-    testDatabaseConnection.query(sql, function (error) {
+    await testDatabaseConnection.query(sql, function (error) {
       if (error) {
         throw error;
       }
     });
   });
 
-  after(function () {
-    testDatabaseConnection.end();
+  after(async function () {
+    await testDatabaseConnection.end();
   });
 
   describe('getDatasets()', function() {
