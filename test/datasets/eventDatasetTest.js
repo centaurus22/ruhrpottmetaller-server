@@ -10,14 +10,21 @@ describe('dataset/eventDataset.js', function() {
 
   describe ('getUrl()', function () {
     it('should return an object which is passed by the constructor', function () {
-      let Event = new event(null, null, null, null, 'https://www.google.de');
+      let Event = new event(
+        null,
+        null,
+        null,
+        null,
+        null,
+        'https://www.google.de'
+      );
       assert.equal(Event.getUrl(), 'https://www.google.de');
     });
   });
 
   describe ('setUrl()', function () {
     it('should return an object which is passed by the setUrl() method', function () {
-      let Event = new event(null, null, null, null);
+      let Event = new event(null, null, null, null, null, null);
       Event.setUrl('https://www.beerfest.de');
       assert.equal(Event.getUrl(), 'https://www.beerfest.de');
     });
@@ -25,14 +32,14 @@ describe('dataset/eventDataset.js', function() {
 
   describe ('getId()', function () {
     it('should return an object which is passed by the constructor', function () {
-      let Event = new event(1, null, null, null);
+      let Event = new event(1, null, null, null, null, null);
       assert.equal(Event.getId(), 1);
     });
   });
 
   describe ('setId()', function () {
-    it('should return an object which is passed by the setId() method', function () {
-      let Event = new event(null, null, null, null);
+    it('should set the id', function () {
+      let Event = new event(null, null, null, null, null, null);
       Event.setId(2);
       assert.equal(Event.getId(), 2);
     });
@@ -59,6 +66,29 @@ describe('dataset/eventDataset.js', function() {
     });
   });
 
+  describe ('setNumberOfDays()', function () {
+    it('should set the number of days', function () {
+      let Event = new event(null, null, null, null, null, null);
+      Event.setNumberOfDays(2);
+      assert.equal(Event.getNumberOfDays(), 2);
+    });
+  });
+
+  describe ('getVenueId()', function () {
+    it('should return an object which is passed by the constructor', function () {
+      let Event = new event(null, null, null, null, 192, null);
+      assert.equal(Event.getVenueId(), 192);
+    });
+  });
+
+  describe ('setVenueId()', function () {
+    it('should set the id of the venue', function () {
+      let Event = new event(null, null, null, null, null, null);
+      Event.setVenueId(2);
+      assert.equal(Event.getVenueId(), 2);
+    });
+  });
+
   describe('_getProperties()', function () {
     it(
       'should return an Array with the property name "_id"',
@@ -72,7 +102,7 @@ describe('dataset/eventDataset.js', function() {
       function () {
         let Event = new event();
         assert.equal(Event._getProperties() instanceof Array, true);
-        assert.equal(Event._getProperties()[4], '_url');
+        assert.equal(Event._getProperties()[5], '_url');
     });
   });
 
@@ -90,8 +120,10 @@ describe('dataset/eventDataset.js', function() {
         new variable('name'),
         new variable('date_start'),
         new variable('number_of_days'),
+        new variable('venue_id'),
         new variable('url')
       );
+
       assert.instanceOf(Event.getProperties()[0], Array);
       assert.equal(Event.getProperties()[0][0], 'id');
       assert.equal(Event.getProperties()[0][1], 'getId');

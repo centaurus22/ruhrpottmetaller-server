@@ -9,6 +9,7 @@ let Event = new event(
   new variable('name'),
   new variable('date_start'),
   new variable('number_of_days'),
+  new variable('venue_id'),
   new variable('url')
 );
 const Model = new model(testDatabaseConnection, Event);
