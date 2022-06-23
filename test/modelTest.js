@@ -137,10 +137,4 @@ describe('model.js', function() {
       assert.equal(datasets.length, 1);
     });
   });
-
-  describe('getDatasetProperties()', function() {
-    it('Should return an Array', function() {
-      assert.instanceOf(Model.getDatasetProperties(), Array);
-    });
-  });
 });
