@@ -50,16 +50,13 @@ describe('model.js', function() {
       assert.equal(datasets.length, 1);
       assert.isObject(datasets[0]);
       assert.instanceOf(datasets[0], event);
-      assert.isObject(datasets[0].getUrl());
-      assert.instanceOf(datasets[0].getUrl(), variable);
-      assert.instanceOf(datasets[0].getId(), variable);
       assert.equal(
-        datasets[0].getUrl().getValue(),
+        datasets[0].getUrl(),
         'https://www.ruhrpottmetaller.de'
       );
-      assert.equal(datasets[0].getId().getValue(), 1);
-      assert.equal(datasets[0].getName().getValue(), 'Darkness-Fest');
-      assert.equal(datasets[0].getDateStart().getValue(), '2035-03-03');
+      assert.equal(datasets[0].getId(), 1);
+      assert.equal(datasets[0].getName(), 'Darkness-Fest');
+      assert.equal(datasets[0].getDateStart(), '2035-03-03');
     });
 
     it('should return an Array with two Datasets if event table contains two items', async function() {
@@ -79,15 +76,15 @@ describe('model.js', function() {
       assert.instanceOf(datasets, Array);
       assert.equal(datasets.length, 2);
       assert.equal(
-        datasets[0].getUrl().getValue(),
+        datasets[0].getUrl(),
         'https://www.beerfest.de'
       );
       assert.equal(
-        datasets[1].getUrl().getValue(),
+        datasets[1].getUrl(),
         'https://www.ruhrpottmetaller.de'
       );
       assert.equal(
-        datasets[1].getId().getValue(),
+        datasets[1].getId(),
         2
       );
     });
@@ -107,11 +104,11 @@ describe('model.js', function() {
       });
       const datasets = await Model.getDatasets();
       assert.equal(
-        datasets[1].getUrl().getValue(),
+        datasets[1].getUrl(),
         'https://www.beerfest.de'
       );
       assert.equal(
-        datasets[0].getUrl().getValue(),
+        datasets[0].getUrl(),
         'https://www.ruhrpottmetaller.de'
       );
     });
@@ -131,7 +128,7 @@ describe('model.js', function() {
       });
       const datasets = await Model.getDatasets();
       assert.equal(
-        datasets[0].getUrl().getValue(),
+        datasets[0].getUrl(),
         'https://www.ruhrpottmetaller.de'
       );
       assert.equal(datasets.length, 1);
