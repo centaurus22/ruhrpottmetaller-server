@@ -89,6 +89,21 @@ describe('dataset/eventDataset.js', function() {
     });
   });
 
+  describe ('getSoldOut()', function () {
+    it('should return an object which is passed by the constructor', function () {
+      let Event = new event(null, null, null, null, null, null, 1);
+      assert.equal(Event.getSoldOut(), 1);
+    });
+  });
+
+  describe ('setSoldOut()', function () {
+    it('should set the sold out status', function () {
+      let Event = new event(null, null, null, null, null, null);
+      Event.setSoldOut(1);
+      assert.equal(Event.getSoldOut(), 1);
+    });
+  });
+
   describe('_getProperties()', function () {
     it(
       'should return an Array with the property name "_id"',
@@ -121,7 +136,8 @@ describe('dataset/eventDataset.js', function() {
         new variable('date_start'),
         new variable('number_of_days'),
         new variable('venue_id'),
-        new variable('url')
+        new variable('url'),
+        new variable('sold_out')
       );
 
       assert.instanceOf(Event.getProperties()[0], Array);

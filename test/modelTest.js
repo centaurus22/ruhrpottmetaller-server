@@ -10,8 +10,10 @@ let Event = new event(
   new variable('date_start'),
   new variable('number_of_days'),
   new variable('venue_id'),
-  new variable('url')
+  new variable('url'),
+  new variable('sold_out')
 );
+
 const Model = new model(testDatabaseConnection, Event);
 
 describe('model.js', function() {
