@@ -1,19 +1,19 @@
 const abstractDataset = require('../../lib/datasets/abstractDataset');
 
 const event = class eventDataset extends abstractDataset{
-  _id;
+  id;
 
   constructor(id) {
     super();
-    this._id = id;
+    this.id = id;
   }
 
   setId(id) {
-    this._id = id;
+    this.id = id;
   }
 
   getId() {
-    return this._id;
+    return this.id;
   }
 };
 
