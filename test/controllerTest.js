@@ -1,3 +1,4 @@
+const assert = require('chai').assert;
 const controller = require('../lib/controller.js');
 let testDatabaseConnection = require('./testLib/testDatabaseConnection');
 const model = require('../lib/model.js');
@@ -30,8 +31,7 @@ describe('controller.js', function() {
           throw error;
         }
       });
-      console.log(await Controller.getResponse());
-      JSON.parse(await Controller.getResponse());
+      assert.instanceOf(await Controller.getResponse(), Array);
     });
   });
 });
