@@ -17,8 +17,14 @@ const Controller = new controller(new model(databaseConnection, new eventDataset
   new variable('sold_out')
 )));
 
-router.get('/', async (request, response) => {
-  response.status(200).json(await Controller.getResponse());
+router.get('/', async (request, response, next) => {
+  response.status(200).json(await Controller.getResponse(next));
 });
+
+router.use((error, request, response, next) => {
+  console.log(error);
+  response.status(500).send('Internal Server Error');
+});
+
 
 module.exports = router;
