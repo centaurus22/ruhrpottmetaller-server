@@ -14,6 +14,7 @@ This work is provided under the terms of the MIT license. Please take a look at 
 ## Technology
 These software versions are known to work:
 * Node.js 12.22
+* MariadDB 10.5
 
 Needed Node.js modules:
 * express 4.17
