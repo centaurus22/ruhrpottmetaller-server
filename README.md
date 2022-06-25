@@ -34,6 +34,16 @@ are necessary:
 * Install the dependencies with `npm install`.
 * Run the App with `node index.js`.
 
+## API Documentation
+This section describes the API: Its entry point is `/api/v1/`. The available
+endpoints are listed here.
+
+### Endpoint `event`.
+This endpoint is used to handle event data.
+
+#### Get method
+By default events which are going to take place today or after today are returned. They are sorted by the ascending date. The number of returned data-sets is limited to 30.
+
 ## How to contribute
 To make a contribution, please clone the project, make your changes and then open a push request or send an e-mail created with `git format-patch` to the contact address below. Development of ruhrpottmetaller-server-1.0 takes place in the main branch.
 
