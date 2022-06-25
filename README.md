@@ -1,5 +1,5 @@
 # ruhrpottmetaller-server
-Sever only version of the ruhrpottmetaller system to provide an API to store and manage information about concerts and festivals
+Server only version of the ruhrpottmetaller system to provide a restful API to store and manage information about concerts and festivals
 including bands, venues and cities.
 
 At the moment only accessing event data is possible. **Please do not use this code in
