@@ -3,9 +3,12 @@
 const express = require('express');
 const app = express();
 
+const authorisation = require('./routes/authorisation');
 const event = require('./routes/event');
 
 app.use(express.static('static'));
+
+app.use('api/v1/user/login', authorisation);
 
 app.use('/api/v1/event', event);
 
